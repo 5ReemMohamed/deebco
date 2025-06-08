@@ -128,9 +128,15 @@ html[dir="ltr"] .content::before {
 
 .navbar-brand img {
   max-height: 60px;
-  width: 100%;
+  width: 80%;
   display: block;
 }
+.navbar-toggler{
+  border: 1px solid var(--primary-color) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 h1{
     margin-top: 15px;
     font-size: 2.2rem;
@@ -860,3 +866,24 @@ footer .gmt-logo{
 .phone-dropdown a:hover {
   background-color: #f0f0f0;
 }
+
+
+ .fixed-link {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 12px 16px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    font-size: 20px;
+    z-index: 1050;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+
+  .fixed-link:hover {
+    background-color: var(--primary-color);
+  }

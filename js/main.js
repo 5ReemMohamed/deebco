@@ -88,9 +88,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (validationErrors.message) {
       messageError.innerHTML = isRTL ? "يجب أن تكون الرسالة 10 أحرف على الأقل." : "Message must be at least 10 characters.";
     }
-    if (validationErrors.pdf) {
-      pdfError.innerHTML = isRTL ? "يرجى رفع ملف PDF فقط." : "Please upload a PDF file only.";
-    }
   }
 
   langSwitchBtn.addEventListener('click', () => {
@@ -165,19 +162,6 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       validationErrors.message = false;
       messageError.innerHTML = "";
-    }
-
-    if (!pdfFile) {
-      validationErrors.pdf = true;
-      pdfError.innerHTML = isRTL ? "يرجى رفع ملف PDF." : "Please upload a PDF file.";
-      isValid = false;
-    } else if (pdfFile.type !== 'application/pdf') {
-      validationErrors.pdf = true;
-      pdfError.innerHTML = isRTL ? "يرجى رفع ملف PDF فقط." : "Please upload a PDF file only.";
-      isValid = false;
-    } else {
-      validationErrors.pdf = false;
-      pdfError.innerHTML = "";
     }
 
     return isValid;
