@@ -128,8 +128,14 @@ html[dir="ltr"] .content::before {
 
 .navbar-brand img {
   max-height: 60px;
-  width: 80%;
+  height: auto;
+  width: auto;
   display: block;
+}
+@media (min-width: 400px) {
+  .navbar-brand img {
+    max-height: 50px;
+  }
 }
 .navbar-toggler{
   border: 1px solid var(--primary-color) !important;
