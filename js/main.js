@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const emailError = document.getElementById("emailError");
   const phoneError = document.getElementById("phoneError");
   const messageError = document.getElementById("messageError");
-  const pdfError = document.getElementById("pdfError");
 
   const successMessage = document.getElementById("formSuccess");
   const scrollToTopBtn = document.getElementById("scrollToTopBtn");
@@ -33,8 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     name: false,
     email: false,
     phone: false,
-    message: false,
-    pdf: false
+    message: false
   };
 
   window.addEventListener("scroll", () => {
@@ -90,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  langSwitchBtn.addEventListener('click', () => {
+  langSwitchBtn?.addEventListener('click', () => {
     const currentLang = langSwitchBtn.getAttribute('data-lang');
     const newLang = currentLang === 'ar' ? 'en' : 'ar';
 
@@ -124,7 +122,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const email = emailInput?.value.trim() || '';
     const phone = phoneInput?.value.trim() || '';
     const message = messageInput?.value.trim() || '';
-    const pdfFile = pdfInput?.files[0];
 
     if (name.length < 3) {
       validationErrors.name = true;
@@ -175,29 +172,31 @@ document.addEventListener('DOMContentLoaded', function () {
   if (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+
       const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
 
       if (validateAll()) {
-        const formData = {
-          name: nameInput.value.trim(),
-          email: emailInput.value.trim(),
-          phone: phoneInput.value.trim(),
-          message: messageInput.value.trim(),
-          pdfFileName: pdfInput?.files[0]?.name || "None"
-        };
-        let submissions = JSON.parse(localStorage.getItem("formSubmissions")) || [];
-        submissions.push(formData);
-        localStorage.setItem("formSubmissions", JSON.stringify(submissions));
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const phone = phoneInput.value.trim();
+        const message = messageInput.value.trim();
+        const pdfFileName = pdfInput?.files[0]?.name || "None";
+
+        // Construct message
+        const waMessage = `Name: ${name}%0AEmail: ${email}%0APhone: ${phone}%0AMessage: ${message}%0APDF: ${pdfFileName}`;
+        const whatsappURL = `https://wa.me/96891486481?text=${waMessage}`;
+
+        window.open(whatsappURL, '_blank');
 
         if (successMessage) {
           successMessage.innerHTML = isRTL
-            ? "لقد تم ارسال الرسالة بنجاح"
-            : "The message has been sent successfully.";
+            ? "لقد تم ارسال البيانات إلى واتساب بنجاح."
+            : "Form data has been sent to WhatsApp successfully.";
           successMessage.classList.remove("d-none");
         }
 
         form.reset();
-        validationErrors = { name: false, email: false, phone: false, message: false, pdf: false };
+        validationErrors = { name: false, email: false, phone: false, message: false };
 
         setTimeout(() => {
           if (successMessage) successMessage.classList.add("d-none");
