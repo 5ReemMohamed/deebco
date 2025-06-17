@@ -203,10 +203,10 @@ if (pdfFile) {
     // EmailJS Send
     try {
     emailjs.send('service_b49n80l', 'template_2zsbqir', {
-        from_name: name,
-        reply_to: email,
-        phone: phone,
-        message: message,
+        from_name: nameInput.value,
+        reply_to: emailInput.value,
+        phone: phoneInput.value,
+        message: messageInput.value,
         file_url: driveFileUrl,
         to_name: "Deebco",
         to_email: "Deebco99@gmail.com"
