@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let validationErrors = { name: false, email: false, phone: false, message: false };
 
-  // Scroll & navbar
   window.addEventListener("scroll", () => {
     scrollToTopBtn.style.display = window.scrollY > 300 ? "flex" : "none";
     navbar.classList.toggle("scrolled", window.scrollY > 50);
@@ -54,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Placeholder translations
+  
   function updatePlaceholders(lang) {
     [nameInput, emailInput, phoneInput, messageInput, pdfInput].forEach(input => {
       const placeholder = input?.getAttribute(`data-${lang}-placeholder`);
@@ -62,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Error messages
+
   function updateErrorMessages(lang) {
     const isRTL = lang === 'ar';
     if (validationErrors.name) nameError.innerHTML = isRTL ? "الاسم يجب أن يكون على الأقل 3 أحرف." : "Name must be at least 3 characters.";
@@ -71,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (validationErrors.message) messageError.innerHTML = isRTL ? "يجب أن تكون الرسالة 10 أحرف على الأقل." : "Message must be at least 10 characters.";
   }
 
-  // Language switch
+  
   langSwitchBtn?.addEventListener('click', () => {
     const currentLang = langSwitchBtn.getAttribute('data-lang');
     const newLang = currentLang === 'ar' ? 'en' : 'ar';
@@ -93,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
     updateErrorMessages(newLang);
   });
 
-  // Validation
+ 
   function validateAll() {
     let isValid = true;
     const dir = document.documentElement.getAttribute('dir');
@@ -148,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
     input?.addEventListener("change", validateAll);
   });
 
-  // Form submission
+
   form?.addEventListener("submit", async function (e) {
     e.preventDefault();
     if (!validateAll()) {
@@ -168,12 +167,11 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // Send to WhatsApp
+    
     const waMessage = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}\nPDF: ${pdfFile?.name || "None"}`);
     window.open(`https://wa.me/96891486481?text=${waMessage}`, '_blank');
 
-    // Upload to Google Drive
-    let driveFileUrl = "None";
+    let driveFileUrl = "";
     if (pdfFile) {
       try {
         const base64PDF = await new Promise((resolve, reject) => {
@@ -201,19 +199,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       } catch (err) {
         console.error("Drive Upload Error:", err);
-        alert("❌ Failed to upload file to Google Drive.");
+        alert("Failed to upload file to Google Drive.");
         return;
       }
     }
 
-    // Send email via EmailJS
     try {
      const emailParams = {
-        from_name: name,
-        reply_to: email,
-        phone: phone,
-        file_url: driveFileUrl || "",
-        message: message,
+        from_name: name || "-",
+        reply_to: email || "-",
+        phone: phone || "-",
+        file_url: driveFileUrl, 
+        message: message || "-"
       };
 
       console.log("Sending to EmailJS with:", emailParams);
@@ -221,7 +218,6 @@ document.addEventListener('DOMContentLoaded', function () {
       await emailjs.send('service_b49n80l', 'template_2zsbqir', emailParams);
 
 
-      // Send to Google Sheet
       const sheetURL = "https://script.google.com/macros/s/AKfycbyzImUDjTLQ5R857Eg2S-GO6g3FXR4MmqO0UiLaEWVJxvB6wjC4xi5M6hnO9-jMM-6k/exec";
       const sheetData = new FormData();
       sheetData.append("UserName", name);
