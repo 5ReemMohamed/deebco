@@ -205,11 +205,11 @@ form?.addEventListener("submit", async function (e) {
 
   try {
     const emailParams = {
-      from_name: String(name || ""),
-      reply_to: String(email || ""),
-      phone: String(phone || ""),
-      file_url: driveFileUrl || "",
-      message: String(message || "")
+       from_name: String(name || ""),
+       reply_to: String(email || ""),
+       phone: String(phone || ""),
+       file_url: driveFileUrl || "",
+       message: String(message || "")
     };
 
     console.log("Sending to EmailJS with:", emailParams);
