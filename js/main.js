@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
         phone: phone,
         message: message,
         file_url: driveFileUrl?.startsWith("http") ? driveFileUrl : "",
-        to_email: "Deebco99@gmail.com"
+        
       });
 
       // Send to Google Sheet
