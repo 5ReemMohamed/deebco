@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
         reply_to: email,
         phone: phone,
         message: message,
-        file_url: driveFileUrl || "No file uploaded",
+        file_url: driveFileUrl?.startsWith("http") ? driveFileUrl : "",
         to_email: "Deebco99@gmail.com"
       });
 
