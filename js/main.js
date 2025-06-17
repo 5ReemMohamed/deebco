@@ -208,14 +208,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Send email via EmailJS
     try {
-      await emailjs.send('service_b49n80l', 'template_2zsbqir', {
+     const emailParams = {
         from_name: name,
         reply_to: email,
         phone: phone,
         message: message,
-        file_url: driveFileUrl?.startsWith("http") ? driveFileUrl : "",
-        
-      });
+        file_url: driveFileUrl
+      };
+
+      console.log("Sending to EmailJS with:", emailParams);
+
+      await emailjs.send('service_b49n80l', 'template_2zsbqir', emailParams);
+
 
       // Send to Google Sheet
       const sheetURL = "https://script.google.com/macros/s/AKfycbyzImUDjTLQ5R857Eg2S-GO6g3FXR4MmqO0UiLaEWVJxvB6wjC4xi5M6hnO9-jMM-6k/exec";
