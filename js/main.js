@@ -165,7 +165,7 @@ form?.addEventListener("submit", async function (e) {
   const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
 
  if (pdfFile && pdfFile.size > 5 * 1024 * 1024) {
-  alert(isRTL ? "حجم الملف كبير جدًا. الحد الأقصى 5." : "File is too large. Max 10MB.");
+  alert(isRTL ? "حجم الملف كبير جدًا. الحد الأقصى 5." : "File is too large. Max 5MB.");
   return;
 }
 
