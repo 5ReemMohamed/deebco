@@ -198,7 +198,7 @@ form?.addEventListener("submit", async function (e) {
       }
     } catch (err) {
       console.error("Drive Upload Error:", err);
-      alert("❌ Failed to upload file to Google Drive.");
+      alert("Failed to upload file to Google Drive.");
       return;
     }
   }
@@ -223,7 +223,7 @@ form?.addEventListener("submit", async function (e) {
     sheetData.append("UserEmail", email);
     sheetData.append("UserPhone", phone);
     sheetData.append("message", message);
-    if (pdfFile) sheetData.append("pdfFile", pdfFile);
+    if (pdfFile) sheetData.append("pdfFile", pdfFile.name);
 
     await fetch(sheetURL, { method: "POST", body: sheetData });
 
