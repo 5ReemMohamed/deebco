@@ -164,10 +164,11 @@ form?.addEventListener("submit", async function (e) {
   const pdfFile = pdfInput?.files[0] || null;
   const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
 
-  if (pdfFile && pdfFile.size > 2 * 1024 * 1024) {
-    alert(isRTL ? "حجم الملف كبير جدًا. الحد الأقصى 2MB." : "File is too large. Max 2MB.");
-    return;
-  }
+ if (pdfFile && pdfFile.size > 10 * 1024 * 1024) {
+  alert(isRTL ? "حجم الملف كبير جدًا. الحد الأقصى 10MB." : "File is too large. Max 10MB.");
+  return;
+}
+
 
   const waMessage = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}\nPDF: ${pdfFile?.name || "None"}`);
   window.open(`https://wa.me/96891486481?text=${waMessage}`, '_blank');
