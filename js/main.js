@@ -212,8 +212,8 @@ document.addEventListener('DOMContentLoaded', function () {
         from_name: name,
         reply_to: email,
         phone: phone,
+        file_url: driveFileUrl || "",
         message: message,
-        file_url: driveFileUrl || ""
       };
 
       console.log("Sending to EmailJS with:", emailParams);
