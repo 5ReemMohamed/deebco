@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const successMessage = document.getElementById("formSuccess");
   const scrollToTopBtn = document.getElementById("scrollToTopBtn");
   const phoneToggleBtn = document.getElementById("phoneToggleBtn");
+  const loadingMessage = document.getElementById("formLoading");
   const phoneDropdown = document.getElementById("phoneDropdown");
 
   let validationErrors = { name: false, email: false, phone: false, message: false };
@@ -155,6 +156,7 @@ form?.addEventListener("submit", async function (e) {
     return;
   }
 
+
   const name = nameInput.value.trim();
   const email = emailInput.value.trim();
   const phone = phoneInput.value.trim();
@@ -202,7 +204,8 @@ form?.addEventListener("submit", async function (e) {
       return;
     }
   }
-
+  loadingMessage?.classList.remove("d-none");
+  successMessage?.classList.add("d-none");
   try {
     const emailParams = {
        from_name: String(name || ""),
@@ -216,7 +219,6 @@ form?.addEventListener("submit", async function (e) {
 
     await emailjs.send('service_b49n80l', 'template_2zsbqir', emailParams);
 
-    // Send to Google Sheet
     const sheetURL = "https://script.google.com/macros/s/AKfycbyzImUDjTLQ5R857Eg2S-GO6g3FXR4MmqO0UiLaEWVJxvB6wjC4xi5M6hnO9-jMM-6k/exec";
     const sheetData = new FormData();
     sheetData.append("UserName", name);
@@ -227,6 +229,7 @@ form?.addEventListener("submit", async function (e) {
 
     await fetch(sheetURL, { method: "POST", body: sheetData });
 
+    loadingMessage?.classList.add("d-none");
     successMessage.innerHTML = isRTL ? "تم إرسال البيانات بنجاح." : "Data sent successfully.";
     successMessage.classList.remove("d-none");
     form.reset();
@@ -234,6 +237,7 @@ form?.addEventListener("submit", async function (e) {
     setTimeout(() => successMessage.classList.add("d-none"), 5000);
   } catch (error) {
     console.error("Submission Error:", error);
+    loadingMessage?.classList.add("d-none");
     alert(isRTL ? "حدث خطأ أثناء إرسال البيانات." : "Error submitting form.");
   }
 });
