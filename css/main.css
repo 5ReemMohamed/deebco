@@ -127,7 +127,7 @@ html[dir="ltr"] .content::before {
 }
 
 .navbar-brand img {
-  max-height: 60px;
+  max-height: 30px;
   height: auto;
   width: auto;
   display: block;
@@ -895,4 +895,19 @@ position: fixed;
   }
   .fixed-link:hover {
     background-color: var(--primary-color);
+  }
+
+  .contact-btn{
+    background-color: var(--primary-color);
+    padding: 12px 20px;
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 10px; 
+     font-size: 1.1rem;
+    font-weight: 600;
+  }
+  @media screen and (min-width:992px) {
+     .contact-btn{
+    padding: 16px 42px;
+  }
   }
