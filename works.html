@@ -16,6 +16,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
 </head>
 <body>
  <header id="header">
@@ -36,7 +39,6 @@
           <li class="nav-item"><a class="nav-link" href="index.html#identity" data-ar="هويتنا" data-en="Our Identity">هويتنا</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html#services" data-ar="خدماتنا" data-en="Services">خدماتنا</a></li>
           <li class="nav-item"><a class="nav-link" href="#works" data-ar="اعمالنا" data-en="Projects">اعمالنا</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#contact" data-ar="اتصل بنا" data-en="Contact">اتصل بنا</a></li>
         </ul>
         <div class="d-flex align-items-center justify-content-center">
           <button class="primary-btn ms-lg-3 lang" id="langSwitch" data-lang="ar" aria-label="تغيير اللغة">
@@ -46,7 +48,11 @@
       </div>
     </div>
   </nav>
+ <div class="fixed-links d-flex flex-column gap-3">
+          <a href="#contact" data-ar="تواصل معنا" data-en="contact Us" class="fixed-link" aria-label="تواصل معنا">تواصل معنا</a> 
+            <a href="works.html" target="_blank" data-ar="اعمالنا" data-en="Our Works" class="fixed-link work-fixed" aria-label="اعمالنا">اعمالنا</a>
 
+  </div>
   <div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center gap-4 text-center" data-aos="fade-in" data-aos-delay="100">
     <div class="row g-4 content p-4">
       <div class="col-12">
@@ -1327,26 +1333,7 @@
                   <img src="images/landscape4.jpg" class="w-100 d-block rounded" alt="Restoration3">
                 </div>
               </div>
-              <div class="col-lg-4">
-                <div class="img">
-                  <img src="images/landscape5.jpg" class="w-100 d-block rounded" alt="Restoration3">
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="img">
-                  <img src="images/landscape6.jpg" class="w-100 d-block rounded" alt="Restoration3">
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="img">
-                  <img src="images/landscape7.jpg" class="w-100 d-block rounded" alt="Restoration3">
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="img">
-                  <img src="images/landscape8.jpg" class="w-100 d-block rounded" alt="Restoration3">
-                </div>
-              </div>
+             
             </div>
                 </div>
                 <div class="tab-pane fade" id="pills-decor" role="tabpanel" aria-labelledby="pills-decor-tab" tabindex="0">
@@ -1440,6 +1427,26 @@
                           <img src="images/img8.jpg" class="w-100 d-block rounded" alt="Restoration3">
                         </div>
                       </div>
+                       <div class="col-lg-4">
+                <div class="img">
+                  <img src="images/landscape5.jpg" class="w-100 d-block rounded" alt="Restoration3">
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="img">
+                  <img src="images/landscape6.jpg" class="w-100 d-block rounded" alt="Restoration3">
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="img">
+                  <img src="images/landscape7.jpg" class="w-100 d-block rounded" alt="Restoration3">
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="img">
+                  <img src="images/landscape8.jpg" class="w-100 d-block rounded" alt="Restoration3">
+                </div>
+              </div>
                        <div class="col-md-6 col-lg-4">
                         <div class="img video">
                           <video class="w-100 d-block rounded" controls>

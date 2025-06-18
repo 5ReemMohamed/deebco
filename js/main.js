@@ -239,7 +239,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       
       const waMessage = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}\nPDF: ${pdfFile?.name || "None"}`);
-      window.open(`https://wa.me/96891486481?text=${waMessage}`, '_blank');
+      const whatsappAnchor = document.getElementById("whatsappLink");
+      whatsappAnchor.href = `https://wa.me/96891486481?text=${waMessage}`;
+      whatsappAnchor.click();
 
     } catch (error) {
       console.error("Submission Error:", error);

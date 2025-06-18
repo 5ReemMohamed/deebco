@@ -26,7 +26,7 @@
     
  <header id="header">
   <nav class="navbar navbar-expand-lg position-fixed fixed-top py-4" aria-label="Main Navigation">
-    <div class="container navbar-container">
+    <div class="container navbar-container d-flex justify-content-between align-items-center">
       <a class="navbar-brand fw-bold d-flex justify-content-center align-items-center" href="index.html" title="العودة للصفحة الرئيسية">
         <img src="images/logo.png" alt="logo image">
       </a>
@@ -44,15 +44,20 @@
           <li class="nav-item"><a class="nav-link" href="works.html" data-ar="اعمالنا" data-en="Projects">اعمالنا</a></li>
         </ul>
         <div class="d-flex align-items-center justify-content-center gap-2 mt-4 mt-lg-0">   
-           <a href="#contact" data-ar="تواصل معنا" data-en="contact" class="primary-btn" aria-label="تواصل معنا">تواصل معنا</a>     
            <button class="primary-btn ms-lg-3 lang" id="langSwitch" data-lang="ar" aria-label="تغيير اللغة">
             <i class="fa-solid fa-globe"></i> <span id="langLabel" data-en="AR" data-ar="EN">EN</span>
           </button>
         </div>
       </div>
+         
+
     </div>
   </nav>
-  <a href="works.html" target="_blank" data-ar="اعمالنا" data-en="Our Works" class="fixed-link work-fixed" aria-label="اعمالنا">اعمالنا</a>
+   <div class="fixed-links d-flex flex-column gap-3">
+          <a href="#contact" data-ar="تواصل معنا" data-en="contact Us" class="fixed-link" aria-label="تواصل معنا">تواصل معنا</a> 
+            <a href="works.html" target="_blank" data-ar="اعمالنا" data-en="Our Works" class="fixed-link work-fixed" aria-label="اعمالنا">اعمالنا</a>
+
+      </div>
 
   <div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center gap-4 text-center" data-aos="fade-in" data-aos-delay="100">
     <div class="row g-4 content p-4">
@@ -697,6 +702,7 @@
                 </div>
                 <p id="formLoading" class="text-center d-none">Sending your message, please wait...</p>
                 <p id="formSuccess" class="text-success text-center d-none mt-3">تم ارسال الرسالة</p>
+                <a id="whatsappLink" href="#" target="_blank" style="display: none;"></a>
             </form>
           </div>
         </div>  
