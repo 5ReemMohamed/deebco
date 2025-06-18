@@ -237,12 +237,6 @@ document.addEventListener('DOMContentLoaded', function () {
       validationErrors = { name: false, email: false, phone: false, message: false };
       setTimeout(() => successMessage.classList.add("d-none"), 5000);
 
-      
-      const waMessage = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}\nPDF: ${pdfFile?.name || "None"}`);
-      const whatsappAnchor = document.getElementById("whatsappLink");
-      whatsappAnchor.href = `https://wa.me/96891486481?text=${waMessage}`;
-      whatsappAnchor.click();
-
     } catch (error) {
       console.error("Submission Error:", error);
       loadingMessage?.classList.add("d-none");
