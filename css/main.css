@@ -127,10 +127,15 @@ html[dir="ltr"] .content::before {
 }
 
 .navbar-brand img {
-  max-height: 30px;
+  max-height: 38px;
   height: auto;
   width: auto;
   display: block;
+}
+@media (min-width: 340px) {
+  .navbar-brand img {
+    max-height: 50px;
+  }
 }
 @media (min-width: 400px) {
   .navbar-brand img {
@@ -899,7 +904,7 @@ position: fixed;
 
   .contact-btn{
     background-color: var(--primary-color);
-    padding: 12px 20px;
+    padding: 12px;
     text-decoration: none;
     color: var(--white);
     border-radius: 10px; 
