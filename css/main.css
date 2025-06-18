@@ -139,7 +139,7 @@ html[dir="ltr"] .content::before {
 }
 @media (min-width: 400px) {
   .navbar-brand img {
-    max-height: 50px;
+    max-height: 55px;
   }
 }
 .navbar-toggler{
