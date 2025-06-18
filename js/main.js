@@ -54,14 +54,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  
   function updatePlaceholders(lang) {
     [nameInput, emailInput, phoneInput, messageInput, pdfInput].forEach(input => {
       const placeholder = input?.getAttribute(`data-${lang}-placeholder`);
       if (placeholder) input.placeholder = placeholder;
     });
   }
-
 
   function updateErrorMessages(lang) {
     const isRTL = lang === 'ar';
@@ -71,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (validationErrors.message) messageError.innerHTML = isRTL ? "يجب أن تكون الرسالة 10 أحرف على الأقل." : "Message must be at least 10 characters.";
   }
 
-  
   langSwitchBtn?.addEventListener('click', () => {
     const currentLang = langSwitchBtn.getAttribute('data-lang');
     const newLang = currentLang === 'ar' ? 'en' : 'ar';
@@ -93,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
     updateErrorMessages(newLang);
   });
 
- 
   function validateAll() {
     let isValid = true;
     const dir = document.documentElement.getAttribute('dir');
@@ -148,100 +144,109 @@ document.addEventListener('DOMContentLoaded', function () {
     input?.addEventListener("change", validateAll);
   });
 
-
-form?.addEventListener("submit", async function (e) {
-  e.preventDefault();
-  if (!validateAll()) {
-    successMessage?.classList.add("d-none");
-    return;
-  }
-
-
-  const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
-  const phone = phoneInput.value.trim();
-  const message = messageInput.value.trim();
-  const pdfFile = pdfInput?.files[0] || null;
-  const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
-
- if (pdfFile && pdfFile.size > 5 * 1024 * 1024) {
-  alert(isRTL ? "حجم الملف كبير جدًا. الحد الأقصى 5." : "File is too large. Max 5MB.");
-  return;
-}
-
-
-  const waMessage = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}\nPDF: ${pdfFile?.name || "None"}`);
-  window.open(`https://wa.me/96891486481?text=${waMessage}`, '_blank');
-
-  let driveFileUrl = "";
-  if (pdfFile) {
-    try {
-      const base64PDF = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result.split(',')[1]);
-        reader.onerror = reject;
-        reader.readAsDataURL(pdfFile);
-      });
-
-      const response = await fetch("https://script.google.com/macros/s/AKfycbx7g9ccBtk6vaY_VpiZ2rwbrqJ9qmGtWceLo8edJx4oHBPaBDAvMLC95KPPimfZMW7O/exec", {
-        method: "POST",
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          file: base64PDF,
-          fileName: pdfFile.name,
-          mimeType: pdfFile.type
-        })
-      });
-
-      const result = await response.json();
-      if (result.success && result.fileUrl) {
-        driveFileUrl = result.fileUrl;
-      } else {
-        throw new Error(result.error || "Unknown upload error");
-      }
-    } catch (err) {
-      console.error("Drive Upload Error:", err);
-      alert("Failed to upload file to Google Drive.");
+  form?.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    if (!validateAll()) {
+      successMessage?.classList.add("d-none");
       return;
     }
-  }
-  loadingMessage?.classList.remove("d-none");
-  successMessage?.classList.add("d-none");
-  try {
-    const emailParams = {
-       from_name: String(name || ""),
-       reply_to: String(email || ""),
-       phone: String(phone || ""),
-       file_url: driveFileUrl || "",
-       message: String(message || "")
-    };
 
-    console.log("Sending to EmailJS with:", emailParams);
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const phone = phoneInput.value.trim();
+    const message = messageInput.value.trim();
+    const pdfFile = pdfInput?.files[0] || null;
+    const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
 
-    await emailjs.send('service_b49n80l', 'template_2zsbqir', emailParams);
+    console.log("Form submitted from:", navigator.userAgent);
+    console.log("PDF file:", pdfFile);
+    console.log("Values:", { name, email, phone, message });
 
-    const sheetURL = "https://script.google.com/macros/s/AKfycbyzImUDjTLQ5R857Eg2S-GO6g3FXR4MmqO0UiLaEWVJxvB6wjC4xi5M6hnO9-jMM-6k/exec";
-    const sheetData = new FormData();
-    sheetData.append("UserName", name);
-    sheetData.append("UserEmail", email);
-    sheetData.append("UserPhone", phone);
-    sheetData.append("message", message);
-    if (pdfFile) sheetData.append("pdfFile", pdfFile.name);
+    if (pdfFile && pdfFile.size > 5 * 1024 * 1024) {
+      alert(isRTL ? "حجم الملف كبير جدًا. الحد الأقصى 5." : "File is too large. Max 5MB.");
+      return;
+    }
 
-    await fetch(sheetURL, { method: "POST", body: sheetData });
+    loadingMessage?.classList.remove("d-none");
+    successMessage?.classList.add("d-none");
 
-    loadingMessage?.classList.add("d-none");
-    successMessage.innerHTML = isRTL ? "تم إرسال البيانات بنجاح." : "Data sent successfully.";
-    successMessage.classList.remove("d-none");
-    form.reset();
-    validationErrors = { name: false, email: false, phone: false, message: false };
-    setTimeout(() => successMessage.classList.add("d-none"), 5000);
-  } catch (error) {
-    console.error("Submission Error:", error);
-    loadingMessage?.classList.add("d-none");
-    alert(isRTL ? "حدث خطأ أثناء إرسال البيانات." : "Error submitting form.");
-  }
-});
+    let driveFileUrl = "";
+    if (pdfFile) {
+      try {
+        const base64PDF = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result.split(',')[1]);
+          reader.onerror = reject;
+          reader.readAsDataURL(pdfFile);
+        });
+
+        const response = await fetch("https://script.google.com/macros/s/AKfycbx7g9ccBtk6vaY_VpiZ2rwbrqJ9qmGtWceLo8edJx4oHBPaBDAvMLC95KPPimfZMW7O/exec", {
+          method: "POST",
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            file: base64PDF,
+            fileName: pdfFile.name,
+            mimeType: pdfFile.type
+          })
+        });
+
+        const result = await response.json();
+        if (result.success && result.fileUrl) {
+          driveFileUrl = result.fileUrl;
+        } else {
+          throw new Error(result.error || "Unknown upload error");
+        }
+      } catch (err) {
+        console.error("Drive Upload Error:", err);
+        alert("Failed to upload file to Google Drive.");
+        loadingMessage?.classList.add("d-none");
+        return;
+      }
+    }
+
+    try {
+      const emailParams = {
+        from_name: String(name),
+        reply_to: String(email),
+        phone: String(phone),
+        file_url: driveFileUrl,
+        message: String(message)
+      };
+
+      await emailjs.send('service_b49n80l', 'template_2zsbqir', emailParams)
+        .catch(err => {
+          console.error("EmailJS Error:", err);
+          alert(isRTL ? "فشل إرسال البريد الإلكتروني." : "Failed to send email.");
+          throw err;
+        });
+
+      const sheetURL = "https://script.google.com/macros/s/AKfycbyzImUDjTLQ5R857Eg2S-GO6g3FXR4MmqO0UiLaEWVJxvB6wjC4xi5M6hnO9-jMM-6k/exec";
+      const sheetData = new FormData();
+      sheetData.append("UserName", name);
+      sheetData.append("UserEmail", email);
+      sheetData.append("UserPhone", phone);
+      sheetData.append("message", message);
+      if (pdfFile) sheetData.append("pdfFile", pdfFile.name);
+
+      await fetch(sheetURL, { method: "POST", body: sheetData });
+
+      loadingMessage?.classList.add("d-none");
+      successMessage.innerHTML = isRTL ? "تم إرسال البيانات بنجاح." : "Data sent successfully.";
+      successMessage.classList.remove("d-none");
+      form.reset();
+      validationErrors = { name: false, email: false, phone: false, message: false };
+      setTimeout(() => successMessage.classList.add("d-none"), 5000);
+
+      
+      const waMessage = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}\nPDF: ${pdfFile?.name || "None"}`);
+      window.open(`https://wa.me/96891486481?text=${waMessage}`, '_blank');
+
+    } catch (error) {
+      console.error("Submission Error:", error);
+      loadingMessage?.classList.add("d-none");
+      alert(isRTL ? "حدث خطأ أثناء إرسال البيانات." : "Error submitting form.");
+    }
+  });
 
   AOS.init({ offset: 120, duration: 1000, easing: 'ease-in-out' });
 });
