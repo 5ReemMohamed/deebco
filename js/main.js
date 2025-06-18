@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
   emailjs.init('u4p-pG092VMtXv1nO');
 
   const navbar = document.querySelector(".navbar");
-  const navbarCollapse = document.getElementById("navbarSupportedContent");
+   const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+  const navbarCollapse = document.getElementById('navbarSupportedContent');
   const langSwitchBtn = document.getElementById('langSwitch');
   const translatableElements = document.querySelectorAll('[data-en][data-ar]');
   const form = document.getElementById("contactForm");
@@ -43,7 +44,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
   navbarCollapse?.addEventListener("show.bs.collapse", () => navbar.classList.add("show-bg"));
   navbarCollapse?.addEventListener("hide.bs.collapse", () => navbar.classList.remove("show-bg"));
+ if (navLinks && navbarCollapse) {
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        const isNavbarVisible = window.getComputedStyle(navbarCollapse).display !== 'none';
 
+        if (isNavbarVisible && window.innerWidth < 992) {
+          const collapseInstance = bootstrap.Collapse.getInstance(navbarCollapse);
+          if (collapseInstance) {
+            collapseInstance.hide(); 
+          }
+        }
+      });
+    });
+  }
   phoneToggleBtn?.addEventListener("click", () => {
     phoneDropdown.style.display = phoneDropdown.style.display === "flex" ? "none" : "flex";
   });
